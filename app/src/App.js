@@ -1,12 +1,12 @@
 import React from "react";
-import { max, scaleBand, scaleLinear, format } from "d3";
+import { extent, scaleLinear, format } from "d3";
 import { useData } from "./hooks/useData";
 import "./App.css";
 
 // Components
 import AxisBottom from "./components/AxisBottom";
 import AxisLeft from "./components/AxisLeft";
-import BarMarks from "./components/BarMarks";
+import CircleMark from "./components/CircleMark";
 
 const App = () => {
 	const width = 1200;
@@ -15,8 +15,10 @@ const App = () => {
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 	const data = useData();
-	const yValue = (d) => d.Country;
-	const xValue = (d) => d.Population;
+
+	const xValue = (d) => d.sepal_length;
+	const yValue = (d) => d.sepal_width;
+
 	const siFormat = format(".2s");
 	const xAxisTickFormat = (tickValue) => siFormat(tickValue).replace("G", "B");
 
@@ -24,14 +26,14 @@ const App = () => {
 		return <pre>"Loading"</pre>;
 	}
 
-	const yScale = scaleBand()
-		.domain(data.map(yValue))
-		.range([0, innerHeight])
-		.paddingInner(0.2);
-
 	const xScale = scaleLinear()
-		.domain([0, max(data, xValue)])
+		.domain(extent(data, xValue))
 		.range([0, innerWidth]);
+
+	const yScale = scaleLinear()
+		.domain(extent(data, yValue))
+		.range([0, innerHeight]);
+
 	return (
 		<svg width={width} height={height}>
 			<g transform={`translate(${margin.left}, ${margin.top})`}>
@@ -49,7 +51,7 @@ const App = () => {
 				>
 					Population
 				</text>
-				<BarMarks
+				<CircleMark
 					data={data}
 					xScale={xScale}
 					yScale={yScale}

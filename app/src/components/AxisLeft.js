@@ -7,7 +7,7 @@ const AxisLeft = ({ yScale }) => {
 				key={domain}
 				dy=".32em"
 				x={-10}
-				y={yScale(domain) + yScale.bandwidth() / 2}
+				y={yScale(domain)}
 				style={{ textAnchor: "end" }}
 			>
 				{domain}
