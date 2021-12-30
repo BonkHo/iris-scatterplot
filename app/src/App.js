@@ -15,7 +15,11 @@ const App = () => {
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 	const data = useData();
+	const xAxisLabelOffset = 70;
+	const yAxisLabelOffset = -70;
 
+	const xAxisLabel = "Sepal Length";
+	const yAxisLabel = "Sepal Width";
 	const xValue = (d) => d.sepal_length;
 	const yValue = (d) => d.sepal_width;
 
@@ -42,14 +46,23 @@ const App = () => {
 					innerHeight={innerHeight}
 					tickFormat={xAxisTickFormat}
 				/>
-				<AxisLeft yScale={yScale} />
+				<text
+					className="axis-label"
+					x={yAxisLabelOffset}
+					y={innerHeight / 2}
+					style={{ textAnchor: "middle" }}
+					transform={`rotate(-90, ${yAxisLabelOffset}, ${innerHeight / 2})`}
+				>
+					{yAxisLabel}
+				</text>
+				<AxisLeft yScale={yScale} innerWidth={innerWidth} />
 				<text
 					className="axis-label"
 					x={innerWidth / 2}
-					y={innerHeight + 70}
+					y={innerHeight + xAxisLabelOffset}
 					style={{ textAnchor: "middle" }}
 				>
-					Population
+					{xAxisLabel}
 				</text>
 				<CircleMark
 					data={data}
