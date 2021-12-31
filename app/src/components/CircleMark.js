@@ -7,13 +7,14 @@ const CircleMark = ({
 	yValue,
 	xValue,
 	toolTipFormat,
+	markRadius = 8,
 }) => {
 	return data.map((d) => (
 		<circle
 			className="mark"
 			cx={xScale(xValue(d))}
 			cy={yScale(yValue(d))}
-			r={10}
+			r={markRadius}
 		>
 			<title>{toolTipFormat(xValue(d))}</title>
 		</circle>

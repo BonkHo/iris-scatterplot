@@ -32,11 +32,13 @@ const App = () => {
 
 	const xScale = scaleLinear()
 		.domain(extent(data, xValue))
-		.range([0, innerWidth]);
+		.range([0, innerWidth])
+		.nice();
 
 	const yScale = scaleLinear()
 		.domain(extent(data, yValue))
-		.range([0, innerHeight]);
+		.range([0, innerHeight])
+		.nice();
 
 	return (
 		<svg width={width} height={height}>
@@ -56,14 +58,6 @@ const App = () => {
 					{yAxisLabel}
 				</text>
 				<AxisLeft yScale={yScale} innerWidth={innerWidth} />
-				<text
-					className="axis-label"
-					x={innerWidth / 2}
-					y={innerHeight + xAxisLabelOffset}
-					style={{ textAnchor: "middle" }}
-				>
-					{xAxisLabel}
-				</text>
 				<CircleMark
 					data={data}
 					xScale={xScale}
@@ -72,6 +66,14 @@ const App = () => {
 					yValue={yValue}
 					toolTipFormat={xAxisTickFormat}
 				/>
+				<text
+					className="axis-label"
+					x={innerWidth / 2}
+					y={innerHeight + xAxisLabelOffset}
+					style={{ textAnchor: "middle" }}
+				>
+					{xAxisLabel}
+				</text>
 			</g>
 		</svg>
 	);
